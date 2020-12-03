@@ -8,7 +8,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name="CATEGORIES")
+@Table(name = "CATEGORIES")
 
 public class Category implements Serializable {
 
