@@ -9,129 +9,96 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="USERS")
-@SequenceGenerator(
-		name="UserSeq",
-		sequenceName = "USERS_SEQ",
-		initialValue = 1, 
-		allocationSize = 1
-)
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="use_id")
 	private int useId;
 	
 	@Column(name="use_email", length=255, nullable=false, unique=true)
 	private String useEmail;
 	
-	@Column(name="use_password", length=255, nullable=false, unique=false)
+	@Column(name="use_password", length=255, nullable=false)
 	private String usePassword;
 	
-	@Column(name="use_name", length=255, nullable=false, unique=false)
+	@Column(name="use_name", length=255, nullable=false)
 	private String useName;
 	
-	@Column(name="use_lastname", length=255, nullable=false, unique=false)
+	@Column(name="use_lastname", length=255, nullable=false)
 	private String useLastname;
 	
-	@Column(name="use_role", length=255, nullable=false, unique=false)
+	@Column(name="use_role", length=255, nullable=false)
 	private char useRole;
 	
-	@Column(name="use_deleted", nullable=false, unique=false, columnDefinition="BOOLEAN DEFAULT 0")
+	@Column(name="use_deleted", columnDefinition="BOOLEAN DEFAULT 0")
 	private boolean useDeleted;
 	
+	@ManyToOne
+	@JoinColumn
+	private Company company;
 	
-
 	public User() {
 		super();
 	}
-
-
 
 	public int getUseId() {
 		return useId;
 	}
 
-
-
 	public void setUseId(int useId) {
 		this.useId = useId;
 	}
-
-
 
 	public String getUseEmail() {
 		return useEmail;
 	}
 
-
-
 	public void setUseEmail(String useEmail) {
 		this.useEmail = useEmail;
 	}
-
-
 
 	public String getUsePassword() {
 		return usePassword;
 	}
 
-
-
 	public void setUsePassword(String usePassword) {
 		this.usePassword = usePassword;
 	}
-
-
 
 	public String getUseName() {
 		return useName;
 	}
 
-
-
 	public void setUseName(String useName) {
 		this.useName = useName;
 	}
-
-
 
 	public String getUseLastname() {
 		return useLastname;
 	}
 
-
-
 	public void setUseLastname(String useLastname) {
 		this.useLastname = useLastname;
 	}
-
-
 
 	public char getUseRole() {
 		return useRole;
 	}
 
-
-
 	public void setUseRole(char useRole) {
 		this.useRole = useRole;
 	}
-
-
 
 	public boolean isUseDeleted() {
 		return useDeleted;
 	}
 
-
-
 	public void setUseDeleted(boolean useDeleted) {
 		this.useDeleted = useDeleted;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -146,8 +113,6 @@ public class User implements Serializable {
 		result = prime * result + useRole;
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -187,15 +152,11 @@ public class User implements Serializable {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "User [useId=" + useId + ", useEmail=" + useEmail + ", usePassword=" + usePassword + ", useName="
 				+ useName + ", useLastname=" + useLastname + ", useRole=" + useRole + ", useDeleted=" + useDeleted
 				+ "]";
 	}
-	
-	
    
 }
