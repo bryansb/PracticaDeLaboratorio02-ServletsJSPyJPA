@@ -4,7 +4,18 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import ec.edu.ups.resources.Constants;
 
 /**
  * Entity implementation class for Entity: BillHead
@@ -122,6 +133,30 @@ public class BillHead implements Serializable {
 
 	public void setHeaUser(User heaUser) {
 		this.heaUser = heaUser;
+	}
+	
+	public boolean calcualteTotal() {
+		double heaSubtotal = 0.0;
+		double heaVat = 0.0;
+		double heaTotal = 0.0;
+		try {
+			for(BillDetail bd : this.heaBillDetails) {
+				if(!bd.isDetDeleted()) {
+					heaSubtotal += bd.getDetTotal();
+				}
+			}
+			heaSubtotal = Math.round(heaSubtotal * 100.0)/100.0;
+			setHeaSubtotal(heaSubtotal);
+			heaVat = heaSubtotal * Constants.IVA;
+			heaVat = Math.round(heaVat * 100.0)/100.0;
+			setHeaVat(heaVat);
+			heaTotal = heaSubtotal + heaVat;
+			heaTotal = Math.round(heaTotal * 100.0)/100.0;
+			setHeaTotal(heaTotal);
+		} catch (Exception ex) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

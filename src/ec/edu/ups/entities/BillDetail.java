@@ -34,7 +34,8 @@ public class BillDetail implements Serializable {
 	@JoinColumn
 	private BillHead detBillHead;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "proBillDetail")
+	@OneToOne
+	@JoinColumn
 	private Product detProduct;
 	
 	public BillDetail() {
@@ -95,6 +96,18 @@ public class BillDetail implements Serializable {
 
 	public void setDetProduct(Product detProduct) {
 		this.detProduct = detProduct;
+	}
+	
+	public boolean calculateTotal() {
+		try {
+			double detTotal = getDetAmount() * getDetProduct().getProPrice();
+			detTotal = Math.round(detTotal * 100.0)/100.0;
+			setDetUnitPrice(getDetProduct().getProPrice());
+			setDetTotal(detTotal);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

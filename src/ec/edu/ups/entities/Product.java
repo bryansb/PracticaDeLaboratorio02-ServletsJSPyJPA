@@ -2,6 +2,7 @@ package ec.edu.ups.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,8 +40,7 @@ public class Product implements Serializable {
 	@Column(name = "pro_deleted", columnDefinition = "BOOLEAN DEFAULT 0")
 	private boolean proDeleted;
 
-	@OneToOne
-	@JoinColumn
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "detProduct")
 	private BillDetail proBillDetail;
 	
 	@ManyToOne
