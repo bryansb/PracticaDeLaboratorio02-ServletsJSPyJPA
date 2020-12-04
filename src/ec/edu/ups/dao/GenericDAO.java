@@ -17,7 +17,9 @@ public interface GenericDAO<T, ID> {
 	public List<T> find();
 	
 	//LIKE + AND
-	public List<T> find(String[] attributes, String[] values);
+	public List<T> findByPath(String[][] attributes, String[] values, String order, int index, int size, boolean isDistinct);
 	
-	public List<T> find(String[] attributes, String[] values, String order, int index, int size);
+	public List<T> find(String[] attributes, String[] values, String order, int index, int size, boolean isDistinct);
+	
+	public List<T> findByJoin(String[]classes, String[][] attributes, String[] values, String order, int index, int size, boolean isDistinct);
 }
