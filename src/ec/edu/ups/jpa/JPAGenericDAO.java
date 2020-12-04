@@ -90,6 +90,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		return null;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<T> find(String[] attributes, String[] values, 
 						String order, int index, int size) {

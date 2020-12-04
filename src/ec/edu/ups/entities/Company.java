@@ -1,8 +1,8 @@
 package ec.edu.ups.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,8 +34,11 @@ public class Company implements Serializable {
 	@Column(name="com_deleted", columnDefinition="BOOLEAN DEFAULT 0")
 	private boolean comDeleted;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-	private Set<User> users = new HashSet<User>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "useCompany")
+	private List<User> comUsers = new ArrayList<User>();
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "proCompany")
+	private List<Product> comProducts = new ArrayList<Product>();	
 
 	public Company() {
 		super();
@@ -64,7 +67,23 @@ public class Company implements Serializable {
 	public void setComDeleted(boolean comDeleted) {
 		this.comDeleted = comDeleted;
 	}
+	
+	public List<User> getComUsers() {
+		return comUsers;
+	}
 
+	public void setComUsers(List<User> users) {
+		this.comUsers = users;
+	}
+
+	public List<Product> getComProducts() {
+		return comProducts;
+	}
+
+	public void setComProducts(List<Product> products) {
+		this.comProducts = products;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,6 +91,8 @@ public class Company implements Serializable {
 		result = prime * result + (comDeleted ? 1231 : 1237);
 		result = prime * result + comId;
 		result = prime * result + ((comName == null) ? 0 : comName.hashCode());
+		result = prime * result + ((comProducts == null) ? 0 : comProducts.hashCode());
+		result = prime * result + ((comUsers == null) ? 0 : comUsers.hashCode());
 		return result;
 	}
 
@@ -92,6 +113,16 @@ public class Company implements Serializable {
 			if (other.comName != null)
 				return false;
 		} else if (!comName.equals(other.comName))
+			return false;
+		if (comProducts == null) {
+			if (other.comProducts != null)
+				return false;
+		} else if (!comProducts.equals(other.comProducts))
+			return false;
+		if (comUsers == null) {
+			if (other.comUsers != null)
+				return false;
+		} else if (!comUsers.equals(other.comUsers))
 			return false;
 		return true;
 	}

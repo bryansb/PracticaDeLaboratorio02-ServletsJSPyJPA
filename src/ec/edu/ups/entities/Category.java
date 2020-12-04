@@ -1,12 +1,16 @@
 package ec.edu.ups.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,6 +33,9 @@ public class Category implements Serializable {
 	
 	@Column(name="cat_deleted", columnDefinition="BOOLEAN DEFAULT 0")
 	private boolean catDeleted;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "proCategory")
+	private List<Product> catProducts = new ArrayList<Product>();
 
 	public Category() {
 		super();
@@ -58,6 +65,14 @@ public class Category implements Serializable {
 		this.catDeleted = catDeleted;
 	}
 
+	public List<Product> getCatProducts() {
+		return catProducts;
+	}
+
+	public void setCatProducts(List<Product> catProducts) {
+		this.catProducts = catProducts;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,6 +80,7 @@ public class Category implements Serializable {
 		result = prime * result + (catDeleted ? 1231 : 1237);
 		result = prime * result + catId;
 		result = prime * result + ((catName == null) ? 0 : catName.hashCode());
+		result = prime * result + ((catProducts == null) ? 0 : catProducts.hashCode());
 		return result;
 	}
 
@@ -85,6 +101,11 @@ public class Category implements Serializable {
 			if (other.catName != null)
 				return false;
 		} else if (!catName.equals(other.catName))
+			return false;
+		if (catProducts == null) {
+			if (other.catProducts != null)
+				return false;
+		} else if (!catProducts.equals(other.catProducts))
 			return false;
 		return true;
 	}

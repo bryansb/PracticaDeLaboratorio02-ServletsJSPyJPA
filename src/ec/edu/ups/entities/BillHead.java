@@ -40,10 +40,154 @@ public class BillHead implements Serializable {
 	private boolean heaDeleted;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "detBillHead")
-	private List<BillDetail> heaBillDeatail;
+	private List<BillDetail> heaBillDetails;
+	
+	@ManyToOne
+	@JoinColumn
+	private User heaUser;
+	
 
 	public BillHead() {
 		super();
 		this.heaStatus = 'C';
 	}
+
+	public int getHeaId() {
+		return heaId;
+	}
+
+	public void setHeaId(int heaId) {
+		this.heaId = heaId;
+	}
+
+	public double getHeaSubtotal() {
+		return heaSubtotal;
+	}
+
+	public void setHeaSubtotal(double heaSubtotal) {
+		this.heaSubtotal = heaSubtotal;
+	}
+
+	public double getHeaVat() {
+		return heaVat;
+	}
+
+	public void setHeaVat(double heaVat) {
+		this.heaVat = heaVat;
+	}
+
+	public Calendar getHeaDate() {
+		return heaDate;
+	}
+
+	public void setHeaDate(Calendar heaDate) {
+		this.heaDate = heaDate;
+	}
+
+	public char getHeaStatus() {
+		return heaStatus;
+	}
+
+	public void setHeaStatus(char heaStatus) {
+		this.heaStatus = heaStatus;
+	}
+
+	public double getHeaTotal() {
+		return heaTotal;
+	}
+
+	public void setHeaTotal(double heaTotal) {
+		this.heaTotal = heaTotal;
+	}
+
+	public boolean isHeaDeleted() {
+		return heaDeleted;
+	}
+
+	public void setHeaDeleted(boolean heaDeleted) {
+		this.heaDeleted = heaDeleted;
+	}
+
+	public List<BillDetail> getHeaBillDetails() {
+		return heaBillDetails;
+	}
+
+	public void setHeaBillDetails(List<BillDetail> heaBillDeatail) {
+		this.heaBillDetails = heaBillDeatail;
+	}
+
+	public User getHeaUser() {
+		return heaUser;
+	}
+
+	public void setHeaUser(User heaUser) {
+		this.heaUser = heaUser;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((heaBillDetails == null) ? 0 : heaBillDetails.hashCode());
+		result = prime * result + ((heaDate == null) ? 0 : heaDate.hashCode());
+		result = prime * result + (heaDeleted ? 1231 : 1237);
+		result = prime * result + heaId;
+		result = prime * result + heaStatus;
+		long temp;
+		temp = Double.doubleToLongBits(heaSubtotal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(heaTotal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((heaUser == null) ? 0 : heaUser.hashCode());
+		temp = Double.doubleToLongBits(heaVat);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BillHead other = (BillHead) obj;
+		if (heaBillDetails == null) {
+			if (other.heaBillDetails != null)
+				return false;
+		} else if (!heaBillDetails.equals(other.heaBillDetails))
+			return false;
+		if (heaDate == null) {
+			if (other.heaDate != null)
+				return false;
+		} else if (!heaDate.equals(other.heaDate))
+			return false;
+		if (heaDeleted != other.heaDeleted)
+			return false;
+		if (heaId != other.heaId)
+			return false;
+		if (heaStatus != other.heaStatus)
+			return false;
+		if (Double.doubleToLongBits(heaSubtotal) != Double.doubleToLongBits(other.heaSubtotal))
+			return false;
+		if (Double.doubleToLongBits(heaTotal) != Double.doubleToLongBits(other.heaTotal))
+			return false;
+		if (heaUser == null) {
+			if (other.heaUser != null)
+				return false;
+		} else if (!heaUser.equals(other.heaUser))
+			return false;
+		if (Double.doubleToLongBits(heaVat) != Double.doubleToLongBits(other.heaVat))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "BillHead [heaId=" + heaId + ", heaSubtotal=" + heaSubtotal + ", heaVat=" + heaVat + ", heaDate="
+				+ heaDate + ", heaStatus=" + heaStatus + ", heaTotal=" + heaTotal + ", heaDeleted=" + heaDeleted
+				+ ", heaBillDetails=" + heaBillDetails + ", heaUser=" + heaUser + "]";
+	}
+	
 }

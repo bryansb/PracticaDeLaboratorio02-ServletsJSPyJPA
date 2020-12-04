@@ -1,7 +1,19 @@
 package ec.edu.ups.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: User
@@ -21,6 +33,9 @@ public class User implements Serializable {
 	@Column(name="use_email", length=255, nullable=false, unique=true)
 	private String useEmail;
 	
+	@Column(name="use_username", length=255, nullable=false, unique=true)
+	private String useUsername;
+	
 	@Column(name="use_password", length=255, nullable=false)
 	private String usePassword;
 	
@@ -38,7 +53,10 @@ public class User implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn
-	private Company company;
+	private Company useCompany;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "heaUser")
+	private List<BillHead> useBillHeads = new ArrayList<BillHead>();
 	
 	public User() {
 		super();
@@ -99,11 +117,37 @@ public class User implements Serializable {
 	public void setUseDeleted(boolean useDeleted) {
 		this.useDeleted = useDeleted;
 	}
+	
+	public String getUseUsername() {
+		return useUsername;
+	}
+
+	public void setUseUsername(String useUsername) {
+		this.useUsername = useUsername;
+	}
+
+	public Company getUseCompany() {
+		return useCompany;
+	}
+
+	public void setUseCompany(Company useCompany) {
+		this.useCompany = useCompany;
+	}
+	
+	public List<BillHead> getUseBillHeads() {
+		return useBillHeads;
+	}
+
+	public void setUseBillHeads(List<BillHead> useBillHeads) {
+		this.useBillHeads = useBillHeads;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((useBillHeads == null) ? 0 : useBillHeads.hashCode());
+		result = prime * result + ((useCompany == null) ? 0 : useCompany.hashCode());
 		result = prime * result + (useDeleted ? 1231 : 1237);
 		result = prime * result + ((useEmail == null) ? 0 : useEmail.hashCode());
 		result = prime * result + useId;
@@ -111,6 +155,7 @@ public class User implements Serializable {
 		result = prime * result + ((useName == null) ? 0 : useName.hashCode());
 		result = prime * result + ((usePassword == null) ? 0 : usePassword.hashCode());
 		result = prime * result + useRole;
+		result = prime * result + ((useUsername == null) ? 0 : useUsername.hashCode());
 		return result;
 	}
 
@@ -123,6 +168,16 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (useBillHeads == null) {
+			if (other.useBillHeads != null)
+				return false;
+		} else if (!useBillHeads.equals(other.useBillHeads))
+			return false;
+		if (useCompany == null) {
+			if (other.useCompany != null)
+				return false;
+		} else if (!useCompany.equals(other.useCompany))
+			return false;
 		if (useDeleted != other.useDeleted)
 			return false;
 		if (useEmail == null) {
@@ -149,14 +204,18 @@ public class User implements Serializable {
 			return false;
 		if (useRole != other.useRole)
 			return false;
+		if (useUsername == null) {
+			if (other.useUsername != null)
+				return false;
+		} else if (!useUsername.equals(other.useUsername))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [useId=" + useId + ", useEmail=" + useEmail + ", usePassword=" + usePassword + ", useName="
-				+ useName + ", useLastname=" + useLastname + ", useRole=" + useRole + ", useDeleted=" + useDeleted
-				+ "]";
+		return "User [useId=" + useId + ", useEmail=" + useEmail + ", useUsername=" + useUsername + ", usePassword="
+				+ usePassword + ", useName=" + useName + ", useLastname=" + useLastname + ", useRole=" + useRole
+				+ ", useDeleted=" + useDeleted + ", useCompany=" + useCompany + ", useBillHeads=" + useBillHeads + "]";
 	}
-   
 }
