@@ -7,12 +7,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+import ec.edu.ups.dao.DAOFactory;
+import ec.edu.ups.dao.ProductDAO;
 import ec.edu.ups.entities.BillDetail;
 import ec.edu.ups.entities.BillHead;
 import ec.edu.ups.entities.Category;
 import ec.edu.ups.entities.Company;
 import ec.edu.ups.entities.Product;
 import ec.edu.ups.entities.User;
+import ec.edu.ups.resources.MathFunction;
 
 public class CreateTable {
 	
@@ -77,7 +80,7 @@ public class CreateTable {
 		bryan.setUseUsername("bryansb");
 		bryan.setUseName("Bryan");
 		bryan.setUseLastname("Sarmiento");
-		bryan.setUsePassword("123");
+		bryan.setUsePassword(MathFunction.getMd5("123"));
 		bryan.setUseRole('A');
 		bryan.setUseCompany(nuvaT);
 		
@@ -86,8 +89,8 @@ public class CreateTable {
 		eduardo.setUseUsername("eddZ");
 		eduardo.setUseName("Eduardo");
 		eduardo.setUseLastname("Zhizhpon");
-		eduardo.setUsePassword("123");
-		eduardo.setUseRole('U');
+		eduardo.setUsePassword(MathFunction.getMd5("123"));
+		eduardo.setUseRole('A');
 		eduardo.setUseCompany(nuvaF);
 		
 		User roberto = new User();
@@ -95,7 +98,7 @@ public class CreateTable {
 		roberto.setUseUsername("robyS");
 		roberto.setUseName("Roberto");
 		roberto.setUseLastname("Serpa");
-		roberto.setUsePassword("123");
+		roberto.setUsePassword(MathFunction.getMd5("123"));
 		roberto.setUseRole('U');
 		roberto.setUseCompany(nuvaT);
 		
@@ -104,7 +107,7 @@ public class CreateTable {
 		fumino.setUseUsername("haru12");
 		fumino.setUseName("Fumino");
 		fumino.setUseLastname("Sakurajima");
-		fumino.setUsePassword("123");
+		fumino.setUsePassword(MathFunction.getMd5("123"));
 		fumino.setUseRole('A');
 		fumino.setUseCompany(nuvaF);
 		
@@ -245,13 +248,13 @@ public class CreateTable {
 		
 			BillDetail detalle3 = new BillDetail();
 			detalle3.setDetAmount(7);
-			detalle3.setDetProduct(mouse);
+			detalle3.setDetProduct(chair);
 			detalle3.calculateTotal();
 			detalle3.setDetBillHead(compra2);
 			
 			BillDetail detalle4 = new BillDetail();
 			detalle4.setDetAmount(3);
-			detalle4.setDetProduct(taco);
+			detalle4.setDetProduct(table);
 			detalle4.calculateTotal();
 			detalle4.setDetBillHead(compra2);
 			
@@ -271,6 +274,16 @@ public class CreateTable {
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			System.out.println("ERROR:CreateBills"+e.getMessage());
+		}
+		
+		
+		ProductDAO productDAO = DAOFactory.getFactory().getProductDAO();
+		String[][] attributes = {{"proId"}};
+		String[] values = {"1"};
+//		List<Product> products = (List<Product>) productDAO.findByPath(attributes, values, null, 0, 0, false);
+		List<Product>  products =  (List<Product>) productDAO.findBestProductsByComId(1, 5);
+		for (Product product : products) {
+			System.out.println(product);
 		}
 		
 //			// Relaciones

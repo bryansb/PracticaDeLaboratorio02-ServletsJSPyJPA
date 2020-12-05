@@ -21,10 +21,10 @@ public class BillDetail implements Serializable {
 	@Column(name = "det_amount")
 	private int detAmount;
 	
-	@Column(name = "det_unit_price", precision = 12, scale = 2)
+	@Column(name = "det_unit_price")
 	private double detUnitPrice;
 	
-	@Column(name = "det_total", precision = 12, scale = 2)
+	@Column(name = "det_total")
 	private double detTotal;
 	
 	@Column(name = "det_deleted", columnDefinition = "BOOLEAN DEFAULT 0")
