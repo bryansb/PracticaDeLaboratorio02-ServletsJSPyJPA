@@ -23,20 +23,20 @@ public class CreateTable {
 		EntityManager em = Persistence.createEntityManagerFactory("jpa").createEntityManager();
 		
 		// Empresas
-		Company nuvaT = new Company();
-		nuvaT.setComName("Nuva T");
+		Company nuvaTech = new Company();
+		nuvaTech.setComName("NuvaTech");
 		
-		Company nuvaF = new Company();
-		nuvaF.setComName("Nuva F");
+		Company masada = new Company();
+		masada.setComName("Masada");
 		
-		Company nuvaH = new Company();
-		nuvaH.setComName("Nuva H");
+		Company fukuokaFood = new Company();
+		fukuokaFood.setComName("Fukuoka Food");
 		
 		try {
 			em.getTransaction().begin();
-			em.persist(nuvaH);
-			em.persist(nuvaF);
-			em.persist(nuvaT);
+			em.persist(fukuokaFood);
+			em.persist(masada);
+			em.persist(nuvaTech);
 			em.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -74,43 +74,116 @@ public class CreateTable {
 			System.out.println("ERROR:CreateCategories"+e.getMessage());
 		}
 		
-		// Usuarios
+		// Usuarios NuvaTech
 		User bryan = new User();
-		bryan.setUseEmail("sarmiento@example.com");
+		bryan.setUseEmail("sarmiento@nuvatech.com");
 		bryan.setUseUsername("bryansb");
 		bryan.setUseName("Bryan");
 		bryan.setUseLastname("Sarmiento");
 		bryan.setUsePassword(MathFunction.getMd5("123"));
 		bryan.setUseRole('A');
-		bryan.setUseCompany(nuvaT);
+		bryan.setUseCompany(nuvaTech);
 		
+		User roberto = new User();
+		roberto.setUseEmail("roby@nuvatech.com");
+		roberto.setUseUsername("robys");
+		roberto.setUseName("Roberto");
+		roberto.setUseLastname("Serpa");
+		roberto.setUsePassword(MathFunction.getMd5("123"));
+		roberto.setUseRole('U');
+		roberto.setUseCompany(nuvaTech);
+		
+		User kathy = new User();
+		kathy.setUseEmail("karen@nuvatech.com");
+		kathy.setUseUsername("kathy1");
+		kathy.setUseName("Karen");
+		kathy.setUseLastname("Cardenas");
+		kathy.setUsePassword(MathFunction.getMd5("123"));
+		kathy.setUseRole('U');
+		kathy.setUseCompany(nuvaTech);
+		
+		User eva = new User();
+		eva.setUseEmail("eva@nuvatech.com");
+		eva.setUseUsername("evavillaroel");
+		eva.setUseName("Eva");
+		eva.setUseLastname("Villarroel");
+		eva.setUsePassword(MathFunction.getMd5("123"));
+		eva.setUseRole('U');
+		eva.setUseCompany(nuvaTech);
+		
+		// Usuarios Masada
 		User eduardo = new User();
-		eduardo.setUseEmail("edd@example.com");
+		eduardo.setUseEmail("edd@masada.com");
 		eduardo.setUseUsername("eddZ");
 		eduardo.setUseName("Eduardo");
 		eduardo.setUseLastname("Zhizhpon");
 		eduardo.setUsePassword(MathFunction.getMd5("123"));
 		eduardo.setUseRole('A');
-		eduardo.setUseCompany(nuvaF);
+		eduardo.setUseCompany(masada);
 		
-		User roberto = new User();
-		roberto.setUseEmail("roby@example.com");
-		roberto.setUseUsername("robyS");
-		roberto.setUseName("Roberto");
-		roberto.setUseLastname("Serpa");
-		roberto.setUsePassword(MathFunction.getMd5("123"));
-		roberto.setUseRole('U');
-		roberto.setUseCompany(nuvaT);
+		User pablo = new User();
+		pablo.setUseEmail("pablo@masada.com");
+		pablo.setUseUsername("palol");
+		pablo.setUseName("Pablo");
+		pablo.setUseLastname("Loja");
+		pablo.setUsePassword(MathFunction.getMd5("123"));
+		pablo.setUseRole('U');
+		pablo.setUseCompany(masada);
 		
+		User robbyn = new User();
+		robbyn.setUseEmail("robbyn@masada.com");
+		robbyn.setUseUsername("robbynr");
+		robbyn.setUseName("Robbyn");
+		robbyn.setUseLastname("Reyes");
+		robbyn.setUsePassword(MathFunction.getMd5("123"));
+		robbyn.setUseRole('U');
+		robbyn.setUseCompany(masada);
+		
+		User carlos = new User();
+		carlos.setUseEmail("carlos@masada.com");
+		carlos.setUseUsername("charly");
+		carlos.setUseName("Carlos");
+		carlos.setUseLastname("Farfan");
+		carlos.setUsePassword(MathFunction.getMd5("123"));
+		carlos.setUseRole('U');
+		carlos.setUseCompany(masada);
+			
+		// Usuarios Fukuoka
 		User fumino = new User();
-		fumino.setUseEmail("sakura@example.com");
-		fumino.setUseUsername("haru12");
+		fumino.setUseEmail("sakura@fukuokafood.com");
+		fumino.setUseUsername("harusf");
 		fumino.setUseName("Fumino");
 		fumino.setUseLastname("Sakurajima");
 		fumino.setUsePassword(MathFunction.getMd5("123"));
 		fumino.setUseRole('A');
-		fumino.setUseCompany(nuvaF);
+		fumino.setUseCompany(fukuokaFood);
 		
+		User lorena = new User();
+		lorena.setUseEmail("lore@fukuokafood.com");
+		lorena.setUseUsername("lesoni");
+		lorena.setUseName("Lorena");
+		lorena.setUseLastname("Basurto");
+		lorena.setUsePassword(MathFunction.getMd5("123"));
+		lorena.setUseRole('U');
+		lorena.setUseCompany(fukuokaFood);
+		
+		User denisse = new User();
+		denisse.setUseEmail("denisse@fukuokafood.com");
+		denisse.setUseUsername("monita");
+		denisse.setUseName("Denisse");
+		denisse.setUseLastname("Basurto");
+		denisse.setUsePassword(MathFunction.getMd5("123"));
+		denisse.setUseRole('U');
+		denisse.setUseCompany(fukuokaFood);
+		
+		User nathy = new User();
+		nathy.setUseEmail("nathy@fukuokafood.com");
+		nathy.setUseUsername("nathys");
+		nathy.setUseName("Nathaly");
+		nathy.setUseLastname("Guaraca");
+		nathy.setUsePassword(MathFunction.getMd5("123"));
+		nathy.setUseRole('U');
+		nathy.setUseCompany(fukuokaFood);		
 		
 		try {
 			em.getTransaction().begin();
@@ -118,6 +191,16 @@ public class CreateTable {
 			em.persist(fumino);
 			em.persist(eduardo);
 			em.persist(roberto);
+			
+			em.persist(carlos);
+			em.persist(eva);
+			em.persist(kathy);
+			em.persist(robbyn);
+			
+			em.persist(pablo);
+			em.persist(nathy);
+			em.persist(lorena);
+			em.persist(denisse);
 			em.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -125,76 +208,106 @@ public class CreateTable {
 			System.out.println("ERROR:CreateUsers"+e.getMessage());
 		}
 		
-		// Productos
+		// Productos NuvaTech
 		Product mouse = new Product();
 		mouse.setProName("Black Widow");
-		mouse.setProStock(10);
-		mouse.setProPrice(50.25);
+		mouse.setProStock(100);
+		mouse.setProPrice(60);
 		mouse.setProCategory(electronics);
-		mouse.setProCompany(nuvaT);
+		mouse.setProCompany(nuvaTech);
 		
 		Product headset = new Product();
 		headset.setProName("Corsair Virtuoso");
-		headset.setProStock(10);
-		headset.setProPrice(50.25);
+		headset.setProStock(100);
+		headset.setProPrice(300);
 		headset.setProCategory(electronics);
-		headset.setProCompany(nuvaT);
+		headset.setProCompany(nuvaTech);
 		
+		Product dellG7 = new Product();
+		dellG7.setProName("Dell G7");
+		dellG7.setProStock(25);
+		dellG7.setProPrice(1250);
+		dellG7.setProCategory(electronics);
+		dellG7.setProCompany(nuvaTech);
+		
+		Product lenovo = new Product();
+		lenovo.setProName("Lenovo Legion");
+		lenovo.setProStock(10);
+		lenovo.setProPrice(2000);
+		lenovo.setProCategory(electronics);
+		lenovo.setProCompany(nuvaTech);
+		
+		// Productos Fukuoka
 		Product pizza = new Product();
-		pizza.setProName("Pizza Napolitana");
-		pizza.setProStock(10);
-		pizza.setProPrice(50.25);
+		pizza.setProName("Pizza Napolitana G");
+		pizza.setProStock(30);
+		pizza.setProPrice(20);
 		pizza.setProCategory(food);
-		pizza.setProCompany(nuvaH);
+		pizza.setProCompany(fukuokaFood);
 		
 		Product taco = new Product();
-		taco.setProName("Taco de pollo");
-		taco.setProStock(10);
-		taco.setProPrice(50.25);
+		taco.setProName("Taco de Carne");
+		taco.setProStock(50);
+		taco.setProPrice(4.50);
 		taco.setProCategory(food);
-		taco.setProCompany(nuvaH);
+		taco.setProCompany(fukuokaFood);
 		
+		Product sushi = new Product();
+		sushi.setProName("Sushi de Cangrejo");
+		sushi.setProStock(45);
+		sushi.setProPrice(9.99);
+		sushi.setProCategory(food);
+		sushi.setProCompany(fukuokaFood);
+		
+		Product yakisoba = new Product();
+		yakisoba.setProName("Yakisoba");
+		yakisoba.setProStock(50);
+		yakisoba.setProPrice(10);
+		yakisoba.setProCategory(food);
+		yakisoba.setProCompany(fukuokaFood);
+		
+		// Productos Masada
 		Product pant = new Product();
-		pant.setProName("Pantalon Negro");
-		pant.setProStock(10);
-		pant.setProPrice(50.25);
+		pant.setProName("Pantalones");
+		pant.setProStock(100);
+		pant.setProPrice(25);
 		pant.setProCategory(clothes);
-		pant.setProCompany(nuvaH);
+		pant.setProCompany(masada);
 		
 		Product suit = new Product();
 		suit.setProName("Traje");
 		suit.setProStock(10);
-		suit.setProPrice(50.25);
+		suit.setProPrice(60);
 		suit.setProCategory(clothes);
-		suit.setProCompany(nuvaH);
+		suit.setProCompany(masada);
 		
 		Product funko = new Product();
 		funko.setProName("Funko Pop");
-		funko.setProStock(10);
-		funko.setProPrice(50.25);
+		funko.setProStock(100);
+		funko.setProPrice(24.99);
 		funko.setProCategory(toy);
-		funko.setProCompany(nuvaT);
+		funko.setProCompany(masada);
 		
 		Product teddy = new Product();
 		teddy.setProName("Peluche");
-		teddy.setProStock(10);
-		teddy.setProPrice(50.25);
+		teddy.setProStock(100);
+		teddy.setProPrice(9.99);
 		teddy.setProCategory(toy);
-		teddy.setProCompany(nuvaH);
+		teddy.setProCompany(masada);
 		
 		Product chair = new Product();
 		chair.setProName("Silla");
 		chair.setProStock(10);
-		chair.setProPrice(50.25);
+		chair.setProPrice(30);
 		chair.setProCategory(furniture);
-		chair.setProCompany(nuvaF);
+		chair.setProCompany(masada);
 		
 		Product table = new Product();
 		table.setProName("Mesa");
-		table.setProStock(10);
-		table.setProPrice(50.25);
+		table.setProStock(75);
+		table.setProPrice(100);
 		table.setProCategory(furniture);
-		table.setProCompany(nuvaF);
+		table.setProCompany(masada);
 		
 		try {
 			em.getTransaction().begin();
@@ -208,6 +321,10 @@ public class CreateTable {
 			em.persist(pizza);
 			em.persist(taco);
 			em.persist(teddy);
+			em.persist(dellG7);
+			em.persist(lenovo);
+			em.persist(yakisoba);
+			em.persist(sushi);
 			em.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -215,130 +332,79 @@ public class CreateTable {
 			System.out.println("ERROR:CreateProducts"+e.getMessage());
 		}
 		
-		
-		// Compras
-		BillHead compra1 = new BillHead();
-		compra1.setHeaUser(eduardo);
-		compra1.setHeaDate(Calendar.getInstance());
-		compra1.setHeaVat(12);
-		
-			BillDetail detalle1 = new BillDetail();
-			detalle1.setDetAmount(2);
-			detalle1.setDetProduct(mouse);
-			detalle1.calculateTotal();
-			detalle1.setDetBillHead(compra1);
-			
-			BillDetail detalle2 = new BillDetail();
-			detalle2.setDetAmount(4);
-			detalle2.setDetProduct(pizza);
-			detalle2.calculateTotal();
-			detalle2.setDetBillHead(compra1);
-			
-		List<BillDetail> detalles = new ArrayList<BillDetail>();
-		detalles.add(detalle1);
-		detalles.add(detalle2);
-		
-		compra1.setHeaBillDetails(detalles);
-		compra1.calcualteTotal();
-		
-		BillHead compra2 = new BillHead();
-		compra2.setHeaUser(roberto);
-		compra2.setHeaDate(Calendar.getInstance());
-		compra2.setHeaVat(12);
-		
-			BillDetail detalle3 = new BillDetail();
-			detalle3.setDetAmount(7);
-			detalle3.setDetProduct(chair);
-			detalle3.calculateTotal();
-			detalle3.setDetBillHead(compra2);
-			
-			BillDetail detalle4 = new BillDetail();
-			detalle4.setDetAmount(3);
-			detalle4.setDetProduct(table);
-			detalle4.calculateTotal();
-			detalle4.setDetBillHead(compra2);
-			
-		List<BillDetail> detalles2 = new ArrayList<BillDetail>();
-		detalles2.add(detalle3);
-		detalles2.add(detalle4);
-		
-		compra2.setHeaBillDetails(detalles2);
-		compra2.calcualteTotal();
-		
-		
-		try {
-			em.getTransaction().begin();
-			em.persist(compra1);
-			em.persist(compra2);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("ERROR:CreateBills"+e.getMessage());
-		}
-		
-		
-		ProductDAO productDAO = DAOFactory.getFactory().getProductDAO();
-		String[][] attributes = {{"proId"}};
-		String[] values = {"1"};
-//		List<Product> products = (List<Product>) productDAO.findByPath(attributes, values, null, 0, 0, false);
-		List<Product>  products =  (List<Product>) productDAO.findBestProductsByComId(1, 5);
-		for (Product product : products) {
-			System.out.println(product);
-		}
-		
-//			// Relaciones
-//		// Empresa-Usuario
+		/*
+		 * Descomentar lo de abajo para registrar pedidos
+		 */
+//		// Compras
+//		BillHead compra1 = new BillHead();
+//		compra1.setHeaUser(eduardo);
+//		compra1.setHeaDate(Calendar.getInstance());
+//		compra1.setHeaVat(12);
 //		
-//		
-//		// Categoria-Producto
-//		List<Product> electronicsProducts = new ArrayList<Product>();
-//		electronicsProducts.add(mouse);
-//		electronicsProducts.add(headset);
-//		electronics.setCatProducts(electronicsProducts);
-//		
-//		List<Product> toysProducts = new ArrayList<Product>();
-//		toysProducts.add(funko);
-//		toysProducts.add(teddy);
-//		toy.setCatProducts(toysProducts);
-//		
-//		List<Product> foodProducts = new ArrayList<Product>();
-//		foodProducts.add(pizza);
-//		foodProducts.add(taco);
-//		food.setCatProducts(foodProducts);
-//		
-//		// Empresa-Producto
-//		List<Product> nuvaTProducts = new ArrayList<Product>();
-//		nuvaTProducts.add(mouse);
-//		nuvaTProducts.add(headset);
-//		nuvaT.setComProducts(nuvaTProducts);
-//		
-//		List<Product> nuvaFProducts = new ArrayList<Product>();
-//		nuvaFProducts.add(funko);
-//		nuvaFProducts.add(teddy);
-//		nuvaF.setComProducts(nuvaFProducts);
-//		
-//		List<Product> nuvaHProducts = new ArrayList<Product>();
-//		nuvaHProducts.add(pizza);
-//		nuvaHProducts.add(taco);
-//		nuvaH.setComProducts(nuvaHProducts);	
-//		try {
+//			BillDetail detalle1 = new BillDetail();
+//			detalle1.setDetAmount(2);
+//			detalle1.setDetProduct(mouse);
+//			detalle1.calculateTotal();
+//			detalle1.setDetBillHead(compra1);
 //			
-//		} catch (Exception e) {
-//			System.out.println("ERROR:CreateCategories"+e.getMessage());
-//		}
+//			BillDetail detalle2 = new BillDetail();
+//			detalle2.setDetAmount(4);
+//			detalle2.setDetProduct(pizza);
+//			detalle2.calculateTotal();
+//			detalle2.setDetBillHead(compra1);
+//			
+//		List<BillDetail> detalles = new ArrayList<BillDetail>();
+//		detalles.add(detalle1);
+//		detalles.add(detalle2);
+//		
+//		compra1.setHeaBillDetails(detalles);
+//		compra1.calcualteTotal();
+//		
+//		BillHead compra2 = new BillHead();
+//		compra2.setHeaUser(roberto);
+//		compra2.setHeaDate(Calendar.getInstance());
+//		compra2.setHeaVat(12);
+//		
+//			BillDetail detalle3 = new BillDetail();
+//			detalle3.setDetAmount(7);
+//			detalle3.setDetProduct(chair);
+//			detalle3.calculateTotal();
+//			detalle3.setDetBillHead(compra2);
+//			
+//			BillDetail detalle4 = new BillDetail();
+//			detalle4.setDetAmount(3);
+//			detalle4.setDetProduct(table);
+//			detalle4.calculateTotal();
+//			detalle4.setDetBillHead(compra2);
+//			
+//		List<BillDetail> detalles2 = new ArrayList<BillDetail>();
+//		detalles2.add(detalle3);
+//		detalles2.add(detalle4);
+//		
+//		compra2.setHeaBillDetails(detalles2);
+//		compra2.calcualteTotal();
+//		
 //		
 //		try {
-//			
+//			em.getTransaction().begin();
+//			em.persist(compra1);
+//			em.persist(compra2);
+//			em.getTransaction().commit();
 //		} catch (Exception e) {
-//			System.out.println("ERROR:CreateUsers"+e.getMessage());
-//		}
-//		
-//		try {
-//			
-//		} catch (Exception e) {
-//			System.out.println("ERROR:CreateProducts"+e.getMessage());
+//			em.getTransaction().rollback();
+//			System.out.println("ERROR:CreateBills"+e.getMessage());
 //		}
 		
+		
+//		ProductDAO productDAO = DAOFactory.getFactory().getProductDAO();
+//		String[][] attributes = {{"proId"}};
+//		String[] values = {"1"};
+////		List<Product> products = (List<Product>) productDAO.findByPath(attributes, values, null, 0, 0, false);
+//		List<Product>  products =  (List<Product>) productDAO.findBestProductsByComId(1, 5);
+//		for (Product product : products) {
+//			System.out.println(product);
+//		}
+
 		
 	}
 

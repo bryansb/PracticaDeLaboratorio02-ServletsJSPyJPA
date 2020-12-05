@@ -65,7 +65,7 @@ public class ListProduct extends HttpServlet {
 			}
 			
 			request.setAttribute("products", productsList);
-			//request.setAttribute("categories", categoriesList);
+			request.setAttribute("categories", categoriesList);
 			request.setAttribute("productRead", product);
 			RequestDispatcher view = request.getRequestDispatcher("/JSP/private/admin/product_register.jsp");
 			view.forward(request, response);
