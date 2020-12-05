@@ -41,6 +41,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 
 	@Override
 	public T read(ID id) {
+		em.clear();
 		return em.find(persistentClass, id);
 	}
 
@@ -83,6 +84,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<T> find(String order,int index, int size) {
+		em.clear();
 		// Se crea un criterio de consulta
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
@@ -112,6 +114,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<T> findByPath(String[][] attributes, String[] values, String order, int index, int size, boolean isDistinct) {
+		em.clear();
 		// Se crea un criterio de consulta
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
@@ -158,6 +161,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 	@Override
 	public List<T> find(String[] attributes, String[] values, 
 						String order, int index, int size, boolean isDistinct) {
+		em.clear();
 		// Se crea un criterio de consulta
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
@@ -201,6 +205,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 	@Override
 	public List<T> findByJoin(String[] classes, String[][] attributes, String[] values, String order, int index,
 			int size, boolean isDistinct) {
+		em.clear();
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
 		// FROM
@@ -215,14 +220,14 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		Predicate sig;
 		if(!attributes[0][0].isEmpty()) {
 			predicate = criteriaBuilder.conjunction();
-			sig = criteriaBuilder.equal(join.get(attributes[0][0]).as(String.class), values[0]);
+			sig = criteriaBuilder.like(join.get(attributes[0][0]).as(String.class), values[0]);
 			predicate = criteriaBuilder.and(predicate, sig);
 		}
 		for (int i = 1; i < classes.length; i++) {
 			join = join.join(classes[i]);
 			for (int j = 0; j < attributes[0].length; j++) {
 				if(!attributes[i][j].isEmpty()) {
-					sig = criteriaBuilder.equal(join.get(attributes[i][j]).as(String.class), values[i]);
+					sig = criteriaBuilder.like(join.get(attributes[i][j]).as(String.class), values[i]);
 					predicate = criteriaBuilder.and(predicate, sig);
 				}
 			}

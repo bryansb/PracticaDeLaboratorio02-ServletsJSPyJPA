@@ -54,8 +54,9 @@ public class ListProduct extends HttpServlet {
 			String[] values3 = {com_id+""};
 			auxPL = productDAO.findByPath(attributes3, values3, null, 0, 0, true);
 			List<Product> productsList = auxPL;
-			
+
 			List<Category> categoriesList = categoryDAO.find(null, 0, 0);
+
 			
 			try {
 				product = (Product) getServletContext().getAttribute("productRead");
@@ -64,7 +65,7 @@ public class ListProduct extends HttpServlet {
 			}
 			
 			request.setAttribute("products", productsList);
-			request.setAttribute("categories", categoriesList);
+			//request.setAttribute("categories", categoriesList);
 			request.setAttribute("productRead", product);
 			RequestDispatcher view = request.getRequestDispatcher("/JSP/private/admin/product_register.jsp");
 			view.forward(request, response);

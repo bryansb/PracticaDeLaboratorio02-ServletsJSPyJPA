@@ -50,6 +50,7 @@ public class BillManagement extends HttpServlet {
 			String[][] attributes = {{"useEmail"}, {"comId"}};
 			String[] values = {"%" + s + "%", user.getUseCompany().getComId() + ""};
 			billHeads = billHeadDAO.findByJoin(classes, attributes, values, null, 0, 0, false);
+			
 			BillHead billHeadRead;
 			try {
 				billHeadRead = (BillHead) getServletContext().getAttribute("billHeadRead");

@@ -68,9 +68,10 @@ public class UpdateBillHead extends HttpServlet {
 						}else {
 							billDetail.getDetProduct().setProStock(stock - amount);
 							billHeadDAO.update(billHead);
+							response.getWriter().append("a&e_notice_sucess");
 							RequestDispatcher view = request.getRequestDispatcher("CreateBillHead");
 							view.forward(request, response);
-							response.getWriter().append("a&e_notice_sucess");
+							
 						}
 					}
 				}
