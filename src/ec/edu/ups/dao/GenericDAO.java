@@ -14,7 +14,7 @@ public interface GenericDAO<T, ID> {
 	
 	public void deleteByID(ID id);
 	
-	public List<T> find();
+	public List<T> find(String order, int index, int size);
 	
 	//LIKE + AND
 	public List<T> findByPath(String[][] attributes, String[] values, String order, int index, int size, boolean isDistinct);
@@ -22,4 +22,5 @@ public interface GenericDAO<T, ID> {
 	public List<T> find(String[] attributes, String[] values, String order, int index, int size, boolean isDistinct);
 	
 	public List<T> findByJoin(String[]classes, String[][] attributes, String[] values, String order, int index, int size, boolean isDistinct);
+	
 }

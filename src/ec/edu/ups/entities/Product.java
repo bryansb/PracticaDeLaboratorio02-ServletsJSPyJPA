@@ -1,6 +1,7 @@
 package ec.edu.ups.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -40,8 +41,9 @@ public class Product implements Serializable {
 	@Column(name = "pro_deleted", columnDefinition = "BOOLEAN DEFAULT 0")
 	private boolean proDeleted;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "detProduct")
-	private BillDetail proBillDetail;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "detProduct")
+	private List<BillDetail> proBillDetails;
 	
 	@ManyToOne
 	@JoinColumn
@@ -95,12 +97,12 @@ public class Product implements Serializable {
 		this.proDeleted = proDeleted;
 	}
 
-	public BillDetail getProBillDetail() {
-		return proBillDetail;
+	public List<BillDetail> getProBillDetail() {
+		return proBillDetails;
 	}
 
-	public void setProBillDetail(BillDetail proBillDetail) {
-		this.proBillDetail = proBillDetail;
+	public void setProBillDetail(List<BillDetail> proBillDetails) {
+		this.proBillDetails = proBillDetails;
 	}
 
 	public Company getProCompany() {
@@ -123,7 +125,7 @@ public class Product implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((proBillDetail == null) ? 0 : proBillDetail.hashCode());
+		result = prime * result + ((proBillDetails == null) ? 0 : proBillDetails.hashCode());
 		result = prime * result + ((proCategory == null) ? 0 : proCategory.hashCode());
 		result = prime * result + ((proCompany == null) ? 0 : proCompany.hashCode());
 		result = prime * result + (proDeleted ? 1231 : 1237);
@@ -145,10 +147,10 @@ public class Product implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (proBillDetail == null) {
-			if (other.proBillDetail != null)
+		if (proBillDetails == null) {
+			if (other.proBillDetails != null)
 				return false;
-		} else if (!proBillDetail.equals(other.proBillDetail))
+		} else if (!proBillDetails.equals(other.proBillDetails))
 			return false;
 		if (proCategory == null) {
 			if (other.proCategory != null)
@@ -179,7 +181,7 @@ public class Product implements Serializable {
 	@Override
 	public String toString() {
 		return "Product [proId=" + proId + ", proName=" + proName + ", proStock=" + proStock + ", proPrice=" + proPrice
-				+ ", proDeleted=" + proDeleted + ", proBillDetail=" + proBillDetail + ", proCompany=" + proCompany
+				+ ", proDeleted=" + proDeleted + ", proBillDetail=" + proBillDetails + ", proCompany=" + proCompany
 				+ ", proCategory=" + proCategory + "]";
 	}
    
