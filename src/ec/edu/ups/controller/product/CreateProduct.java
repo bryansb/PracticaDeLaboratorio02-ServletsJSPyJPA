@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import ec.edu.ups.dao.DAOFactory;
 import ec.edu.ups.dao.ProductDAO;
 import ec.edu.ups.entities.Category;
+import ec.edu.ups.entities.Company;
 import ec.edu.ups.entities.Product;
+import ec.edu.ups.entities.User;
 
 /**
  * Servlet implementation class CreateProduct
@@ -23,6 +25,7 @@ public class CreateProduct extends HttpServlet {
 	private ProductDAO productDAO;
 	private Product product;
 	private Category category;
+	private Company company;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,7 +35,7 @@ public class CreateProduct extends HttpServlet {
         productDAO = DAOFactory.getFactory().getProductDAO();
         product = new Product();
         category = new Category();
-        
+        company = new Company();
     }
 
 	/**
@@ -47,10 +50,14 @@ public class CreateProduct extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
+			User user = (User) request.getSession().getAttribute("user");
+			int com_id = user.getUseCompany().getComId();
+			company.setComId(com_id);
 			category.setCatId(Integer.parseInt(request.getParameter("cat_id")));
 			product.setProName(request.getParameter("pro_name"));
 			product.setProStock(Integer.parseInt(request.getParameter("pro_stock")));
 			product.setProPrice(Double.parseDouble(request.getParameter("pro_price")));
+			product.setProCompany(company);
 			product.setProCategory(category);
 			
 			productDAO.create(product);

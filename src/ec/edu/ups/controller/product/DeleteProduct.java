@@ -38,16 +38,18 @@ public class DeleteProduct extends HttpServlet {
 		try {
 			
 			int d = Integer.parseInt(request.getParameter("pro_deleted"));
-			product.setProId(Integer.parseInt(request.getParameter("pro_id")));
-			product.setProDeleted(d != 0);
+			product = productDAO.read(Integer.parseInt(request.getParameter("pro_id")));
 			
-			productDAO.delete(product);
-			
-			if(d == 1) 
-				response.getWriter().append("Se ha eliminado el producto&e_notice_sucess");
-			else
+			if(d == 0) {
+				product.setProDeleted(false);
+				productDAO.update(product);
 				response.getWriter().append("Se ha restaurado el producto&e_notice_sucess");
-			
+			}else {
+				product.setProDeleted(true);
+				productDAO.update(product);
+				response.getWriter().append("Se ha eliminado el producto&e_notice_sucess");
+			}
+
 		} catch (Exception e) {
 			response.getWriter().append("Hubo un error al eliminar el producto&e_notice_error");
 			e.printStackTrace();
