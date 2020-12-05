@@ -21,9 +21,8 @@ function updateBillDetails(det_id){
 			amount.classList.add("error");
 		} else if(msg[1] == "e_notice_sucess"){
 			location.href = "ShoppingList"
-		} else{
-			amount.classList.add("error");
-			showNotice("No se pudo conectar con el Servidor", "e_notice_error");
+		} else if(msg[1] == "e_notice_error"){
+			showNotice(msg[0], msg[1]);
 		}
 		//jQuery('#father-load').load(`${url} #child-load`);
 	});
@@ -53,8 +52,8 @@ function updateBillHead(){
 			showNotice(msg[0], msg[1]);
 		} else if(msg[1] == "e_notice_sucess"){
 			location.href = "ShoppingList"
-		} else{
-			showNotice("No se pudo conectar con el Servidor", "e_notice_error");
+		}  else if(msg[1] == "e_notice_error"){
+			showNotice(msg[0], msg[1]);
 		}
 		//jQuery('#father-load').load(`${url} #child-load`);
 	});

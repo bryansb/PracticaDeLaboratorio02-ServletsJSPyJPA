@@ -119,6 +119,7 @@
 			    <tbody>
 			    <c:set var="billHeads" scope="request" value="${billHeads}"/>
 			    <c:forEach var="billHead" items="${billHeads}">
+			    <c:if test="${billHead.heaStatus ne 'C'.charAt(0)}">
 			      <tr>
 			        <td>${billHead.heaUser.useEmail}</td>
 			        <td>${billHead.heaDate.time}</td>
@@ -141,6 +142,7 @@
 			      	</c:when>
 			      	</c:choose>
 			      </tr>
+			      </c:if>
 		      	</c:forEach>
 			    </tbody>
 			  </table>
