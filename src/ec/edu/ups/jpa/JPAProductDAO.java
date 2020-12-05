@@ -17,6 +17,7 @@ public class JPAProductDAO extends JPAGenericDAO<Product, Integer> implements Pr
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findBestProductsByComId(int comId, int limit) {
+		em.clear();
 		String jpql = "SELECT p, COUNT(p) AS total FROM Product p "
 				+ "INNER JOIN p.proBillDetails bd "
 				+ "INNER JOIN p.proCompany c "
