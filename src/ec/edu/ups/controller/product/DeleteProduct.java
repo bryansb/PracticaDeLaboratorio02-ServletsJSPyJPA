@@ -41,7 +41,8 @@ public class DeleteProduct extends HttpServlet {
 			product.setProId(Integer.parseInt(request.getParameter("pro_id")));
 			product.setProDeleted(d != 0);
 			
-			productDAO.delete(product);
+			System.out.println(d);
+			//productDAO.deleteByID(product.getProId());//(product);
 			
 			if(d == 1) 
 				response.getWriter().append("Se ha eliminado el producto&e_notice_sucess");
