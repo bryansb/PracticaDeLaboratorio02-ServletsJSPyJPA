@@ -32,10 +32,10 @@ public class BillHead implements Serializable {
 	@Column(name = "hea_id")
 	private int heaId;
 	
-	@Column(name = "hea_subtotal", precision = 12, scale = 2)
+	@Column(name = "hea_subtotal")
 	private double heaSubtotal;
 	
-	@Column(name = "hea_vat", precision = 12, scale = 2)
+	@Column(name = "hea_vat")
 	private double heaVat;
 	
 	@Column(name = "hea_date")
@@ -44,7 +44,7 @@ public class BillHead implements Serializable {
 	@Column(name = "hea_status", columnDefinition = "VARCHAR(1) DEFAULT 'C'")
 	private char heaStatus;
 	
-	@Column(name = "hea_total", precision = 12, scale = 2)
+	@Column(name = "hea_total")
 	private double heaTotal;
 	
 	@Column(name = "hea_deleted", nullable = false, unique = false, columnDefinition = "BOOLEAN DEFAULT 0")
@@ -221,7 +221,7 @@ public class BillHead implements Serializable {
 	@Override
 	public String toString() {
 		return "BillHead [heaId=" + heaId + ", heaSubtotal=" + heaSubtotal + ", heaVat=" + heaVat + ", heaDate="
-				+ heaDate + ", heaStatus=" + heaStatus + ", heaTotal=" + heaTotal + ", heaDeleted=" + heaDeleted
+				+ heaDate.getTime() + ", heaStatus=" + heaStatus + ", heaTotal=" + heaTotal + ", heaDeleted=" + heaDeleted
 				+ ", heaBillDetails=" + heaBillDetails + ", heaUser=" + heaUser + "]";
 	}
 	

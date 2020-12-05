@@ -80,10 +80,33 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<T> find() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<T> find(String order,int index, int size) {
+		// Se crea un criterio de consulta
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
+		
+		// FROM
+		Root<T> root = criteriaQuery.from(this.persistentClass);
+		
+		// SELECT
+		criteriaQuery.select(root);
+		
+		// ORDER
+		if (order != null) criteriaQuery.orderBy(criteriaBuilder.asc(root.get(order)));
+		
+		// Resultado
+		if (index >= 0 && size > 0) {
+			TypedQuery<T> tq = em.createQuery(criteriaQuery);
+			tq.setFirstResult(index);
+			tq.setMaxResults(size);
+			return (List<T>) tq.getResultList();
+		} else {
+			// Se realiza la Query
+			Query query = em.createQuery(criteriaQuery);
+			return (List<T>) query.getResultList();
+		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -106,7 +129,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 			for (int j = 1; j < attributes[i].length; j++) {
 				path = path.get(attributes[i][j]);
 			}
-			Predicate sig = criteriaBuilder.equal(path.as(String.class), values[i]);
+			Predicate sig = criteriaBuilder.like(path.as(String.class), values[i]);
 			predicate = criteriaBuilder.and(predicate, sig);
 		}
 		
@@ -195,10 +218,10 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 			sig = criteriaBuilder.equal(join.get(attributes[0][0]).as(String.class), values[0]);
 			predicate = criteriaBuilder.and(predicate, sig);
 		}
-		for (int i = 0; i < classes.length; i++) {
+		for (int i = 1; i < classes.length; i++) {
+			join = join.join(classes[i]);
 			for (int j = 0; j < attributes[0].length; j++) {
 				if(!attributes[i][j].isEmpty()) {
-					join = join.join(classes[i]);
 					sig = criteriaBuilder.equal(join.get(attributes[i][j]).as(String.class), values[i]);
 					predicate = criteriaBuilder.and(predicate, sig);
 				}
