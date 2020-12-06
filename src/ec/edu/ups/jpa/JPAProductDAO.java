@@ -18,7 +18,7 @@ public class JPAProductDAO extends JPAGenericDAO<Product, Integer> implements Pr
 	@Override
 	public List<Product> findBestProductsByComId(int comId, int limit) {
 		em.clear();
-		String jpql = "SELECT p, COUNT(p) AS total FROM Product p "
+		String jpql = "SELECT p, SUM(bd.detAmount) AS total FROM Product p "
 				+ "INNER JOIN p.proBillDetails bd "
 				+ "INNER JOIN p.proCompany c "
 				+ "WHERE c.comId = " + comId + " GROUP BY (p.proId) ORDER BY total DESC";

@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ec.edu.ups.dao.BillDetailDAO;
 import ec.edu.ups.dao.BillHeadDAO;
 import ec.edu.ups.dao.DAOFactory;
+import ec.edu.ups.dao.ProductDAO;
 import ec.edu.ups.entities.BillDetail;
 import ec.edu.ups.entities.BillHead;
 import ec.edu.ups.entities.User;
@@ -24,6 +26,8 @@ import ec.edu.ups.entities.User;
 public class UpdateBillHead extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BillHeadDAO billHeadDAO;
+	private BillDetailDAO billDetailDAO;
+	private ProductDAO productDAO;
 	private BillHead billHead;
 	
     /**
@@ -32,6 +36,8 @@ public class UpdateBillHead extends HttpServlet {
     public UpdateBillHead() {
         super();
         billHeadDAO = DAOFactory.getFactory().getBillHeadDAO();
+        billDetailDAO = DAOFactory.getFactory().getBillDetailDAO();
+        productDAO = DAOFactory.getFactory().getProductDAO();
     }
 
 	/**
@@ -45,7 +51,6 @@ public class UpdateBillHead extends HttpServlet {
 			String[][] attributes = {{"heaStatus"},{"heaUser", "useId"}};
 			String[] values = {"like&C", "like&" + useId};
 			List<BillHead> aux = (List<BillHead>) billHeadDAO.findByPath(attributes, values, null, 0, 0, false);
-			
 			if (aux.isEmpty())
 				billHead = null;
 			else 
@@ -54,13 +59,12 @@ public class UpdateBillHead extends HttpServlet {
 				response.getWriter().append("No se pudo realizar las operaciones&e_notice_error");
 			}else {
 				billHead.setHeaDate(Calendar.getInstance());
-				
 				if (billHead.getHeaBillDetails() == null) {
 					response.getWriter().append("No se encontraron productos en el carrito&e_notice_warning");
 				}else {
 					String[][] attributesDet = {{"detBillHead", "heaId"}};
 					String[] valuesDet = {"like&" + billHead.getHeaId()};
-					List<BillDetail> details = DAOFactory.getFactory().getBillDetailDAO().findByPath(attributesDet, valuesDet, null, 0, 0, false);
+					List<BillDetail> details = billDetailDAO.findByPath(attributesDet, valuesDet, null, 0, 0, false);
 					for(BillDetail billDetail : details) {
 						int stock = billDetail.getDetProduct().getProStock();
 						int amount = billDetail.getDetAmount();
@@ -78,6 +82,11 @@ public class UpdateBillHead extends HttpServlet {
 						}
 					}
 					if(flag) {
+						
+						for(BillDetail billDetail : details) {
+							productDAO.update(billDetail.getDetProduct());
+						}
+						
 						billHead.setHeaStatus('R');
 						billHead.setHeaBillDetails(details);
 						billHead.calcualteTotal();
@@ -86,9 +95,7 @@ public class UpdateBillHead extends HttpServlet {
 						RequestDispatcher view = request.getRequestDispatcher("CreateBillHead");
 						view.forward(request, response);
 					}
-					
 				}
-				
 			}
 		}catch (Exception e) {
 			response.getWriter().append("No se pudo realizar su pedido&e_notice_error");
