@@ -60,6 +60,9 @@ public class ShoppingList extends HttpServlet {
 			
 			List<BillDetail> billDetails = new ArrayList<BillDetail>();
 			billDetails = DAOFactory.getFactory().getBillDetailDAO().findByHeaId(billHead.getHeaId());
+			for (BillDetail billDetail : billDetails) {
+				billDetail.calculateTotal();
+			}
 			billHead = billHeadDAO.read(billHead.getHeaId());
 			billHead.setHeaBillDetails(billDetails);
 			billHead.calcualteTotal();
