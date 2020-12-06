@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+import ec.edu.ups.dao.CategoryDAO;
 import ec.edu.ups.dao.DAOFactory;
 import ec.edu.ups.dao.ProductDAO;
 import ec.edu.ups.entities.BillDetail;
@@ -286,6 +287,15 @@ public class CreateTable {
 			System.out.println(product);
 		}
 		
+		CategoryDAO categoryDAO = DAOFactory.getFactory().getCategoryDAO();
+		
+		String[] classes = {"catProducts", "proCompany"};
+		String[][] attributes5 = {{""}, {"comId"}};
+		String[] values5 = {"", "1"};
+ 		List<Category> cat = categoryDAO.findByJoin(classes, attributes5, values5, "catName", 0, 0, true);
+ 		
+ 		System.out.println(cat);
+ 		
 //			// Relaciones
 //		// Empresa-Usuario
 //		
