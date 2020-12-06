@@ -14,13 +14,14 @@ public class JPAUserDAO extends JPAGenericDAO<User, Integer> implements UserDAO 
 
 	@Override
 	public User login(String key, String password) {
-		em.clear();
 		password = MathFunction.getMd5(password);
 		String jpql = "SELECT u FROM User u "
 				+ "WHERE (u.useEmail LIKE '" + key + "' OR u.useUsername LIKE '" + key + "') "
 				+ "AND u.usePassword LIKE '" + password + "'";
+		em.clear();
 		Query query = em.createQuery(jpql);
 		User user = (User)query.getSingleResult();
+		em.refresh(user);
 		return user;
 	}
 
