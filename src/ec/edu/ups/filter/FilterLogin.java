@@ -17,10 +17,9 @@ import javax.servlet.http.HttpSession;
  */
 //@WebFilter()
 @WebFilter({"/UpdateBilldetail",  "/DeleteBilldetail",  
-	"/CreateBillhead", "/UpdateBillhead",  "/DeleteBillhead",  
-	"/store", "/ShoppingList",
-	"/JSP/private/*", "/CreateBillDetail", "/UpdateBillDetail",  
-	"/DeleteBillDetail", "/UpdateBillhead",  "/DeleteBillhead", "/myBills", "/ReadBillHead"})
+	"/CreateBillhead", "/UpdateBillhead",  "/DeleteBillhead", "/ReadBillHead",
+	"/store", "/ShoppingList", "/JSP/private/*", "/CreateBillDetail", "/UpdateBillDetail",  
+	"/DeleteBillDetail", "/myBills"})
 public class FilterLogin implements Filter {
 
     /**

@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet Filter implementation class Index
  */
 @WebFilter({"/", "/index.jsp"})
-public class Index implements Filter {
+public class IndexFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public Index() {
+    public IndexFilter() {
         // TODO Auto-generated constructor stub
     }
 

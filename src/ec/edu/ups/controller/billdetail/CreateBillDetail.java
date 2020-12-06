@@ -60,7 +60,7 @@ public class CreateBillDetail extends HttpServlet {
 			Product product = productDAO.read(proId);
 			
 			String[][] attributes = {{"heaStatus"},{"heaUser", "useId"}};
-			String[] values = {"C", useId + ""};
+			String[] values = {"like&C", "like&" + useId};
 			List<BillHead> aux = (List<BillHead>) billHeadDAO.findByPath(attributes, values, null, 0, 0, false);
 			if (aux.isEmpty())
 				billHead = null;
@@ -75,7 +75,7 @@ public class CreateBillDetail extends HttpServlet {
 			}
 			
 			String[][] attributesDet = {{"detProduct", "proId"},{"detBillHead", "heaId"}};
-			String[] valuesDet = {proId + "", billHead.getHeaId() + ""};
+			String[] valuesDet = {"like&" + proId, "like&" + billHead.getHeaId()};
 			List<BillDetail> auxDet = billDetailDAO.findByPath(attributesDet, valuesDet, null, 0, 0, false);
 			if(auxDet.isEmpty()) {
 				billDetail = null;

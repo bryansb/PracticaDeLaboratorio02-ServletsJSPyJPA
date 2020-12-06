@@ -3,6 +3,7 @@ package ec.edu.ups.controller.billhead;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import ec.edu.ups.dao.BillHeadDAO;
 import ec.edu.ups.dao.DAOFactory;
 import ec.edu.ups.entities.BillHead;
 import ec.edu.ups.entities.User;
+import ec.edu.ups.resources.MathFunction;
 
 /**
  * Servlet implementation class UserBill
@@ -40,7 +42,7 @@ public class UserBillList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 		String[][] attributes = {{"heaUser", "useId"}};
-		String[] values = {user.getUseId() + ""};
+		String[] values = {"like&" + user.getUseId()};
 		billHeads = (List<BillHead>) billHeadDAO.findByPath(attributes, values, null, 0, 0, false);
 		BillHead billHeadRead;
 		try {
@@ -48,6 +50,28 @@ public class UserBillList extends HttpServlet {
 		} catch (Exception e) {
 			billHeadRead = new BillHead();
 		}
+		
+		int currentPage;
+		try {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}catch (Exception e) {
+			currentPage = 0;
+		}
+		
+		Map<String, Integer> nav = MathFunction.getNavPages(billHeads.size(), currentPage, 5);
+		int min = nav.get("min");
+		int max = nav.get("max");
+		int minP = nav.get("minP");
+		int maxP = nav.get("maxP");
+		int maxPages = nav.get("maxPages");
+		
+		billHeads = billHeads.subList(min, max + 1);
+		
+		request.setAttribute("min", minP);
+		request.setAttribute("max", maxP);
+		request.setAttribute("maxPages", maxPages);
+		request.setAttribute("currentPage", currentPage);
+		
 		request.setAttribute("billHeads", billHeads);
 		request.setAttribute("billHeadRead", billHeadRead);
 		RequestDispatcher view = request.getRequestDispatcher("/JSP/private/user/bills.jsp");

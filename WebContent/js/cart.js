@@ -37,7 +37,7 @@ function deleteBillDetails(det_id){
 		} else if(msg[1] == "e_notice_sucess"){
 			location.href = "ShoppingList"
 		} else{
-			showNotice("No se pudo conectar con el Servidor", "e_notice_error");
+			showNotice("No se pudo conectar con el Servidor lul", "e_notice_error");
 		}
 		//jQuery('#father-load').load(`${url} #child-load`);
 	});
@@ -53,6 +53,7 @@ function updateBillHead(){
 		} else if(msg[1] == "e_notice_sucess"){
 			location.href = "ShoppingList"
 		}  else if(msg[1] == "e_notice_error"){
+			console.log(msg[0])
 			showNotice(msg[0], msg[1]);
 		}
 		//jQuery('#father-load').load(`${url} #child-load`);

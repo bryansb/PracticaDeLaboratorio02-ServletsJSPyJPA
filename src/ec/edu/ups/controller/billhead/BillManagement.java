@@ -2,6 +2,7 @@ package ec.edu.ups.controller.billhead;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import ec.edu.ups.dao.DAOFactory;
 import ec.edu.ups.dao.UserDAO;
 import ec.edu.ups.entities.BillHead;
 import ec.edu.ups.entities.User;
+import ec.edu.ups.resources.MathFunction;
 
 /**
  * Servlet implementation class BillManagement
@@ -46,9 +48,9 @@ public class BillManagement extends HttpServlet {
 			user = userDAO.read(useId);
 			String s = "";
 			s = request.getParameter("s") == null ? "" : request.getParameter("s");
-			String[] classes = {"heaUser", "useCompany"};
-			String[][] attributes = {{"useEmail"}, {"comId"}};
-			String[] values = {"%" + s + "%", user.getUseCompany().getComId() + ""};
+			String[] classes = {"", "heaUser", "useCompany"};
+			String[][] attributes = {{"heaStatus"}, {"useEmail"}, {"comId"}};
+			String[] values = {"notLike&C", "like&%" + s + "%", "like&" + user.getUseCompany().getComId()};
 			billHeads = billHeadDAO.findByJoin(classes, attributes, values, null, 0, 0, false);
 			
 			BillHead billHeadRead;
@@ -57,6 +59,26 @@ public class BillManagement extends HttpServlet {
 			} catch (Exception e) {
 				billHeadRead = new BillHead();
 			}
+			
+			int currentPage;
+			try {
+				currentPage = Integer.parseInt(request.getParameter("page"));
+			}catch (Exception e) {
+				currentPage = 0;
+			}
+			Map<String, Integer> nav = MathFunction.getNavPages(billHeads.size(), currentPage, 5);
+			int min = nav.get("min");
+			int max = nav.get("max");
+			int minP = nav.get("minP");
+			int maxP = nav.get("maxP");
+			int maxPages = nav.get("maxPages");
+			billHeads = billHeads.subList(min, max + 1);
+			
+			request.setAttribute("min", minP);
+			request.setAttribute("max", maxP);
+			request.setAttribute("maxPages", maxPages);
+			request.setAttribute("currentPage", currentPage);
+			
 			request.setAttribute("billHeads", billHeads);
 			request.setAttribute("billHeadRead", billHeadRead);
 			request.setAttribute("s", s);

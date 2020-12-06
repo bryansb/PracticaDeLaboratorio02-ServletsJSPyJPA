@@ -2,6 +2,7 @@ package ec.edu.ups.controller.product;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import ec.edu.ups.dao.ProductDAO;
 import ec.edu.ups.entities.Category;
 import ec.edu.ups.entities.Product;
 import ec.edu.ups.entities.User;
+import ec.edu.ups.resources.MathFunction;
 
 /**
  * Servlet implementation class ListProduct
@@ -48,10 +50,9 @@ public class ListProduct extends HttpServlet {
 			//System.out.println(com_id);
 			
 			List<Product> auxPL;
-			List<Category> auxCL;
 			
 			String[][] attributes3 = {{"proCompany", "comId"}};
-			String[] values3 = {com_id+""};
+			String[] values3 = {"like&" + com_id};
 			auxPL = productDAO.findByPath(attributes3, values3, null, 0, 0, true);
 			List<Product> productsList = auxPL;
 
@@ -63,6 +64,27 @@ public class ListProduct extends HttpServlet {
 			} catch (Exception e) {
 				product = new Product();
 			}
+			
+			int currentPage;
+			try {
+				currentPage = Integer.parseInt(request.getParameter("page"));
+			}catch (Exception e) {
+				currentPage = 0;
+			}
+			
+			Map<String, Integer> nav = MathFunction.getNavPages(productsList.size(), currentPage, 5);
+			int min = nav.get("min");
+			int max = nav.get("max");
+			int minP = nav.get("minP");
+			int maxP = nav.get("maxP");
+			int maxPages = nav.get("maxPages");
+			
+			productsList = productsList.subList(min, max + 1);
+			
+			request.setAttribute("min", minP);
+			request.setAttribute("max", maxP);
+			request.setAttribute("maxPages", maxPages);
+			request.setAttribute("currentPage", currentPage);
 			
 			request.setAttribute("products", productsList);
 			request.setAttribute("categories", categoriesList);

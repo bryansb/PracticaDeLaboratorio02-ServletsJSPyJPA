@@ -135,7 +135,6 @@
 	            <c:set var="productsList" scope="request" value="${productsList}"/>
 	            <c:forEach var="product" items="${productsList}">
 		        <!-- Item esto se pone en el for each-->
-		        
 	            <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
 	                <div class="media d-block d-sm-flex text-center text-sm-left">
 	                    <div class="media-body pt-3">

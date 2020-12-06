@@ -19,11 +19,9 @@ import ec.edu.ups.entities.User;
  * Servlet Filter implementation class FilterAdmin
  */
 //@WebFilter()
-@WebFilter({"/CreateCategory",  "/ReadCategory",  "/UpdateCategory",  "/DeleteCategory",  
-	"/CreateCompany", "/ReadCompany",  "/UpdateCompany",  "/DeleteCompany", 
-	"/CreateProduct",  "/ReadProduct",  "/UpdateProduct", "/DeleteProduct",  
+@WebFilter({"/CreateProduct",  "/ReadProduct",  "/UpdateProduct", "/DeleteProduct",  
 	"/CreateUser",  "/ReadUser",  "/UpdateUser",  "/DeleteUser",  "/JSP/private/admin/*", "/bills",
-	"/ListProduct", "/BillManagement", "/RequestBillHead", "/ListCompany", "/ListUser"})
+	"/ListProduct", "/BillManagement", "/RequestBillHead"})
 public class FilterAdmin implements Filter {
 
     /**

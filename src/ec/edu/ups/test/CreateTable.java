@@ -406,7 +406,7 @@ public class CreateTable {
 		
 		String[] classes = {"catProducts", "proCompany"};
 		String[][] attributes5 = {{""}, {"comId"}};
-		String[] values5 = {"", "1"};
+		String[] values5 = {"", "like&1"};
  		List<Category> cat = categoryDAO.findByJoin(classes, attributes5, values5, "catName", 0, 0, true);
  		
  		System.out.println(cat);
