@@ -74,7 +74,7 @@ public class CreateBillDetail extends HttpServlet {
 				billHead = aux.get(0);
 			}
 			
-			String[][] attributesDet = {{"detProduct", "proId"},{"detBillHead", "hea_id"}};
+			String[][] attributesDet = {{"detProduct", "proId"},{"detBillHead", "heaId"}};
 			String[] valuesDet = {proId + "", billHead.getHeaId() + ""};
 			List<BillDetail> auxDet = billDetailDAO.findByPath(attributesDet, valuesDet, null, 0, 0, false);
 			if(auxDet.isEmpty()) {
