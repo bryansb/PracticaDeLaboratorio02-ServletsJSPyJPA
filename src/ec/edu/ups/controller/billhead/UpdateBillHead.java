@@ -39,11 +39,13 @@ public class UpdateBillHead extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			boolean flag = false;
 			User user = (User) request.getSession().getAttribute("user");
 			int useId = user.getUseId();
 			String[][] attributes = {{"heaStatus"},{"heaUser", "useId"}};
-			String[] values = {"C", useId + ""};
+			String[] values = {"like&C", "like&" + useId};
 			List<BillHead> aux = (List<BillHead>) billHeadDAO.findByPath(attributes, values, null, 0, 0, false);
+			
 			if (aux.isEmpty())
 				billHead = null;
 			else 
@@ -51,12 +53,15 @@ public class UpdateBillHead extends HttpServlet {
 			if (!billHead.calcualteTotal()) {
 				response.getWriter().append("No se pudo realizar las operaciones&e_notice_error");
 			}else {
-				billHead.setHeaStatus('R');
 				billHead.setHeaDate(Calendar.getInstance());
+				
 				if (billHead.getHeaBillDetails() == null) {
 					response.getWriter().append("No se encontraron productos en el carrito&e_notice_warning");
 				}else {
-					for(BillDetail billDetail : billHead.getHeaBillDetails()) {
+					String[][] attributesDet = {{"detBillHead", "heaId"}};
+					String[] valuesDet = {"like&" + billHead.getHeaId()};
+					List<BillDetail> details = DAOFactory.getFactory().getBillDetailDAO().findByPath(attributesDet, valuesDet, null, 0, 0, false);
+					for(BillDetail billDetail : details) {
 						int stock = billDetail.getDetProduct().getProStock();
 						int amount = billDetail.getDetAmount();
 						if(stock - amount < 0) {
@@ -64,16 +69,24 @@ public class UpdateBillHead extends HttpServlet {
 									+ "no hay stock suficiente para \"" 
 									+ billDetail.getDetProduct().getProName() + "\". Disponible: " 
 									+ billDetail.getDetProduct().getProStock() + "&e_notice_warning");
+							flag = false;
 							break;
 						}else {
 							billDetail.getDetProduct().setProStock(stock - amount);
-							billHeadDAO.update(billHead);
-							response.getWriter().append("a&e_notice_sucess");
-							RequestDispatcher view = request.getRequestDispatcher("CreateBillHead");
-							view.forward(request, response);
-							
+							billDetail.calculateTotal();
+							flag = true;
 						}
 					}
+					if(flag) {
+						billHead.setHeaStatus('R');
+						billHead.setHeaBillDetails(details);
+						billHead.calcualteTotal();
+						billHeadDAO.update(billHead);
+						response.getWriter().append("a&e_notice_sucess");
+						RequestDispatcher view = request.getRequestDispatcher("CreateBillHead");
+						view.forward(request, response);
+					}
+					
 				}
 				
 			}

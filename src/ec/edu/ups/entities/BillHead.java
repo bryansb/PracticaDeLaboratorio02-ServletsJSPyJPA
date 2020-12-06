@@ -222,7 +222,7 @@ public class BillHead implements Serializable {
 	@Override
 	public String toString() {
 		return "BillHead [heaId=" + heaId + ", heaSubtotal=" + heaSubtotal + ", heaVat=" + heaVat + ", heaDate="
-				+ heaDate.getTime() + ", heaStatus=" + heaStatus + ", heaTotal=" + heaTotal + ", heaDeleted=" + heaDeleted
+				+ heaDate + ", heaStatus=" + heaStatus + ", heaTotal=" + heaTotal + ", heaDeleted=" + heaDeleted
 				+ ", heaBillDetails=" + heaBillDetails + ", heaUser=" + heaUser + "]";
 	}
 	

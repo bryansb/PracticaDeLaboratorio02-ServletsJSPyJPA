@@ -132,8 +132,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 			for (int j = 1; j < attributes[i].length; j++) {
 				path = path.get(attributes[i][j]);
 			}
-			Predicate sig = criteriaBuilder.like(path.as(String.class), values[i]);
-			predicate = criteriaBuilder.and(predicate, sig);
+			predicate = criteriaBuilder.and(predicate, getSig(criteriaBuilder, path.as(String.class), values[i]));
 		}
 		
 		// WHERE 
@@ -210,7 +209,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
 		// FROM
 		Root<T> root = criteriaQuery.from(this.persistentClass);
-		Join join = root.join(classes[0]);
+		
 		
 		// SELECT
 		criteriaQuery.select(root);
@@ -218,16 +217,27 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		// Predicados, combinados con AND
 		Predicate predicate = criteriaBuilder.conjunction();
 		Predicate sig;
-		if(!attributes[0][0].isEmpty()) {
-			predicate = criteriaBuilder.conjunction();
-			sig = criteriaBuilder.like(join.get(attributes[0][0]).as(String.class), values[0]);
+		int k = 0;
+		if(classes[k].isBlank()) {
+			sig = getSig(criteriaBuilder, root.get(attributes[k][0]).as(String.class), values[k]);
 			predicate = criteriaBuilder.and(predicate, sig);
+			k++;
 		}
-		for (int i = 1; i < classes.length; i++) {
+		Join join = root.join(classes[k]);
+		if(!attributes[k][0].isEmpty()) {
+//			predicate = criteriaBuilder.conjunction();
+			sig = getSig(criteriaBuilder, join.get(attributes[k][0]).as(String.class), values[k]);
+			predicate = criteriaBuilder.and(predicate, sig);
+			
+		}
+		k++;
+		for (int i = k; i < classes.length; i++) {
 			join = join.join(classes[i]);
-			for (int j = 0; j < attributes[0].length; j++) {
+			for (int j = 0; j < attributes[i].length; j++) {
 				if(!attributes[i][j].isEmpty()) {
-					sig = criteriaBuilder.like(join.get(attributes[i][j]).as(String.class), values[i]);
+					//String keys = "like&" + values[i];
+//					sig = criteriaBuilder.like(join.get(attributes[i][j]).as(String.class), values[i]);
+					sig = getSig(criteriaBuilder, join.get(attributes[i][j]).as(String.class), values[i]);
 					predicate = criteriaBuilder.and(predicate, sig);
 				}
 			}
@@ -253,6 +263,27 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 			Query query = em.createQuery(criteriaQuery);
 			return (List<T>) query.getResultList();
 		}
+	}
+	
+	public Predicate getSig(CriteriaBuilder criteriaBuilder, javax.persistence.criteria.Expression<String> exp, String value) {
+		Predicate sig = null;
+		
+		String[] keys = value.split("&");
+		switch (keys[0]) {
+		case "like":
+			sig = criteriaBuilder.like(exp, keys[1]);
+			break;
+		case "notLike":
+			sig = criteriaBuilder.notLike(exp, keys[1]);
+			break;
+		case ">":
+			sig = criteriaBuilder.greaterThan(exp, keys[1]);
+			break;
+		default:
+			System.out.println("No se encuentra la opcion" + keys[0]);
+			break;
+		}
+		return sig;
 	}
 	
 }

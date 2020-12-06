@@ -34,7 +34,6 @@ function searchProduct(){
 function loadNavPage(s, cat_id, current_page, e){
 	//e.preventDefault();
 	var url = "/sgrc/store?page=" + current_page + "&s=" + s + "&cat_id=" + cat_id;
-	console.log('ENTRA')
 	location.href = url;
 	//$.get(url, function(res){
 		//var msg = res.split("&", 2);

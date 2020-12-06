@@ -6,13 +6,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import ec.edu.ups.entities.BillDetail;
 import ec.edu.ups.entities.BillHead;
 
 public class MathFunction {
-
+	
 	public static double getTrunkDecimal(double n) {
 		NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
 		DecimalFormat df = (DecimalFormat)nf;		
@@ -63,6 +65,38 @@ public class MathFunction {
         }  catch (NoSuchAlgorithmException e) { 
             throw new RuntimeException(e); 
         } 
-    } 
+    }
+	
+	public static Map<String, Integer> getNavPages(int n, int currentPage, int div){
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int maxPages;
+		var min = currentPage * div;
+        var max = min + (div - 1);
+        
+        maxPages = (int)((n - 1) / div);
+        if(max >= n){
+            max = n - 1;
+        }
+        min = min > max ? max : min;
+        min = min < 0 ? 0 : min;
+        
+        int minP = currentPage - 3;
+        if(minP < 0) {
+        	minP = 0;
+        }
+        int maxP = currentPage + 3;
+        if(maxP >= maxPages) {
+        	maxP = maxPages;
+        }
+        
+        map.put("min", min);
+        map.put("max", max);
+        map.put("minP", minP);
+        map.put("maxP", maxP);
+        map.put("maxPages", maxPages);
+        
+		return map;
+	}
 	
 }

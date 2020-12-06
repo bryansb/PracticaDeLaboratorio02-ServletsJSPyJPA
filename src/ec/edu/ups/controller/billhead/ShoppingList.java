@@ -42,7 +42,7 @@ public class ShoppingList extends HttpServlet {
 			BillHead billHead;
 			
 			String[][] attributes = {{"heaStatus"},{"heaUser", "useId"}};
-			String[] values = {"C", useId + ""};
+			String[] values = {"like&C", "like&" + useId};
 			List<BillHead> aux = (List<BillHead>) billHeadDAO.findByPath(attributes, values, null, 0, 0, false);
 			
 			if (aux.isEmpty())
