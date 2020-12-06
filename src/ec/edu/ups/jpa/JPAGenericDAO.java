@@ -207,14 +207,8 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		em.clear();
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
-		// FROM
 		Root<T> root = criteriaQuery.from(this.persistentClass);
-		
-		
-		// SELECT
 		criteriaQuery.select(root);
-		
-		// Predicados, combinados con AND
 		Predicate predicate = criteriaBuilder.conjunction();
 		Predicate sig;
 		int k = 0;
@@ -225,49 +219,36 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		}
 		Join join = root.join(classes[k]);
 		if(!attributes[k][0].isEmpty()) {
-//			predicate = criteriaBuilder.conjunction();
 			sig = getSig(criteriaBuilder, join.get(attributes[k][0]).as(String.class), values[k]);
 			predicate = criteriaBuilder.and(predicate, sig);
-			
 		}
 		k++;
 		for (int i = k; i < classes.length; i++) {
 			join = join.join(classes[i]);
 			for (int j = 0; j < attributes[i].length; j++) {
 				if(!attributes[i][j].isEmpty()) {
-					//String keys = "like&" + values[i];
-//					sig = criteriaBuilder.like(join.get(attributes[i][j]).as(String.class), values[i]);
 					sig = getSig(criteriaBuilder, join.get(attributes[i][j]).as(String.class), values[i]);
 					predicate = criteriaBuilder.and(predicate, sig);
 				}
 			}
-			
 		}
-		
-		// WHERE 
 		criteriaQuery.where(predicate);
-		
-		// ORDER
 		if (order != null) criteriaQuery.orderBy(criteriaBuilder.asc(root.get(order)));
-		
 		criteriaQuery.distinct(isDistinct);
-		
-		// Resultado
 		if (index >= 0 && size > 0) {
 			TypedQuery<T> tq = em.createQuery(criteriaQuery);
 			tq.setFirstResult(index);
 			tq.setMaxResults(size);
 			return (List<T>) tq.getResultList();
 		} else {
-			// Se realiza la Query
 			Query query = em.createQuery(criteriaQuery);
 			return (List<T>) query.getResultList();
 		}
 	}
 	
-	public Predicate getSig(CriteriaBuilder criteriaBuilder, javax.persistence.criteria.Expression<String> exp, String value) {
+	public Predicate getSig(CriteriaBuilder criteriaBuilder, 
+			javax.persistence.criteria.Expression<String> exp, String value) {
 		Predicate sig = null;
-		
 		String[] keys = value.split("&");
 		switch (keys[0]) {
 		case "like":
@@ -285,5 +266,4 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID>{
 		}
 		return sig;
 	}
-	
 }

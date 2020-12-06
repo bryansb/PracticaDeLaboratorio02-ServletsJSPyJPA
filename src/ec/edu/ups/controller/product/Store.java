@@ -61,13 +61,10 @@ public class Store extends HttpServlet {
 			
 		}
         s = request.getParameter("s") == null ? "" : request.getParameter("s");
-        
         String[] classes = {"catProducts", "proCompany"};
 		String[][] attributes1 = {{""}, {"comId"}};
 		String[] values1 = {"", "like&" + comId};
-		System.out.println("LLEGA");
  		categories = categoryDAO.findByJoin(classes, attributes1, values1, "catName", 0, 0, true);
- 		System.out.println("LLEGA depues");
 		String[][] attributes = {{"proCategory", "catId"},{"proName"}, {"proStock"}};		
         
 		products = new ArrayList<Product>();

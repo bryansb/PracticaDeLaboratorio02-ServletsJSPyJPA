@@ -1,7 +1,5 @@
 package ec.edu.ups.test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,8 +8,6 @@ import javax.persistence.Persistence;
 import ec.edu.ups.dao.CategoryDAO;
 import ec.edu.ups.dao.DAOFactory;
 import ec.edu.ups.dao.ProductDAO;
-import ec.edu.ups.entities.BillDetail;
-import ec.edu.ups.entities.BillHead;
 import ec.edu.ups.entities.Category;
 import ec.edu.ups.entities.Company;
 import ec.edu.ups.entities.Product;
@@ -333,70 +329,67 @@ public class CreateTable {
 			System.out.println("ERROR:CreateProducts"+e.getMessage());
 		}
     // Compras
-		BillHead compra1 = new BillHead();
-		compra1.setHeaUser(eduardo);
-		compra1.setHeaDate(Calendar.getInstance());
-		compra1.setHeaVat(12);
-		
-			BillDetail detalle1 = new BillDetail();
-			detalle1.setDetAmount(2);
-			detalle1.setDetProduct(mouse);
-			detalle1.calculateTotal();
-			detalle1.setDetBillHead(compra1);
-			
-			BillDetail detalle2 = new BillDetail();
-			detalle2.setDetAmount(4);
-			detalle2.setDetProduct(pizza);
-			detalle2.calculateTotal();
-			detalle2.setDetBillHead(compra1);
-			
-		List<BillDetail> detalles = new ArrayList<BillDetail>();
-		detalles.add(detalle1);
-		detalles.add(detalle2);
-		
-		compra1.setHeaBillDetails(detalles);
-		compra1.calcualteTotal();
-		
-		BillHead compra2 = new BillHead();
-		compra2.setHeaUser(roberto);
-		compra2.setHeaDate(Calendar.getInstance());
-		compra2.setHeaVat(12);
-		
-			BillDetail detalle3 = new BillDetail();
-			detalle3.setDetAmount(7);
-			detalle3.setDetProduct(chair);
-			detalle3.calculateTotal();
-			detalle3.setDetBillHead(compra2);
-			
-			BillDetail detalle4 = new BillDetail();
-			detalle4.setDetAmount(3);
-			detalle4.setDetProduct(table);
-			detalle4.calculateTotal();
-			detalle4.setDetBillHead(compra2);
-			
-		List<BillDetail> detalles2 = new ArrayList<BillDetail>();
-		detalles2.add(detalle3);
-		detalles2.add(detalle4);
-		
-		compra2.setHeaBillDetails(detalles2);
-		compra2.calcualteTotal();
-		
-		
-		try {
-			em.getTransaction().begin();
-			em.persist(compra1);
-			em.persist(compra2);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("ERROR:CreateBills"+e.getMessage());
-		}
-		
+//		BillHead compra1 = new BillHead();
+//		compra1.setHeaUser(eduardo);
+//		compra1.setHeaDate(Calendar.getInstance());
+//		compra1.setHeaVat(12);
+//		
+//			BillDetail detalle1 = new BillDetail();
+//			detalle1.setDetAmount(2);
+//			detalle1.setDetProduct(mouse);
+//			detalle1.calculateTotal();
+//			detalle1.setDetBillHead(compra1);
+//			
+//			BillDetail detalle2 = new BillDetail();
+//			detalle2.setDetAmount(4);
+//			detalle2.setDetProduct(pizza);
+//			detalle2.calculateTotal();
+//			detalle2.setDetBillHead(compra1);
+//			
+//		List<BillDetail> detalles = new ArrayList<BillDetail>();
+//		detalles.add(detalle1);
+//		detalles.add(detalle2);
+//		
+//		compra1.setHeaBillDetails(detalles);
+//		compra1.calcualteTotal();
+//		
+//		BillHead compra2 = new BillHead();
+//		compra2.setHeaUser(roberto);
+//		compra2.setHeaDate(Calendar.getInstance());
+//		compra2.setHeaVat(12);
+//		
+//			BillDetail detalle3 = new BillDetail();
+//			detalle3.setDetAmount(7);
+//			detalle3.setDetProduct(chair);
+//			detalle3.calculateTotal();
+//			detalle3.setDetBillHead(compra2);
+//			
+//			BillDetail detalle4 = new BillDetail();
+//			detalle4.setDetAmount(3);
+//			detalle4.setDetProduct(table);
+//			detalle4.calculateTotal();
+//			detalle4.setDetBillHead(compra2);
+//			
+//		List<BillDetail> detalles2 = new ArrayList<BillDetail>();
+//		detalles2.add(detalle3);
+//		detalles2.add(detalle4);
+//		
+//		compra2.setHeaBillDetails(detalles2);
+//		compra2.calcualteTotal();
+//		
+//		
+//		try {
+//			em.getTransaction().begin();
+//			em.persist(compra1);
+//			em.persist(compra2);
+//			em.getTransaction().commit();
+//		} catch (Exception e) {
+//			em.getTransaction().rollback();
+//			System.out.println("ERROR:CreateBills"+e.getMessage());
+//		}
+//		
 		
 		ProductDAO productDAO = DAOFactory.getFactory().getProductDAO();
-		String[][] attributes = {{"proId"}};
-		String[] values = {"1"};
-//		List<Product> products = (List<Product>) productDAO.findByPath(attributes, values, null, 0, 0, false);
 		List<Product>  products =  (List<Product>) productDAO.findBestProductsByComId(1, 5);
 		for (Product product : products) {
 			System.out.println(product);
